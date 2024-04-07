@@ -1,0 +1,5 @@
+FROM quay.io/fedora/fedora-minimal:39
+
+RUN echo "assumeyes=True" >> /etc/dnf/dnf.conf
+
+RUN dnf upgrade
