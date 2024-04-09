@@ -22,9 +22,8 @@ jobs:
           image: ghcr.io/${{ github.repository }}
           tags: dev ${{ github.sha }}
           oci: true
-          context: ./images/fedora
           containerfiles: |
-            Containerfile
+            ./images/fedora/Containerfile
 
       - name: Push to GHCR
         id: push-image
