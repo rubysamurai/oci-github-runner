@@ -24,7 +24,7 @@ jobs:
           oci: true
           context: ./images/fedora
           containerfiles: |
-            .Containerfile
+            Containerfile
 
       - name: Push to GHCR
         id: push-image
