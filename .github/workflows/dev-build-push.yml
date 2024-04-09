@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - images/fedora/**
+      - .github/workflows/dev-build-push.yml
 
 env:
   IMAGE_NAME: oci-github-runner
