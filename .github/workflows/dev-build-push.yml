@@ -5,6 +5,12 @@ on:
     branches:
       - main
 
+env:
+  IMAGE_NAME: oci-github-runner
+  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+  REGISTRY_USERNAME: ${{ github.actor }}
+  REGISTRY_PASSWORD: ${{ github.token }}
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -19,18 +25,18 @@ jobs:
         id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
-          image: ghcr.io/${{ github.repository }}
+          image: ${{ env.IMAGE_NAME }}
           tags: dev ${{ github.sha }}
           oci: true
           containerfiles: |
             ./images/fedora/Containerfile
 
-      - name: Push to GHCR
+      - name: Push to registry
         id: push-image
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.build-image.outputs.image }}
           tags: ${{ steps.build-image.outputs.tags }}
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ github.token }}
+          registry: ${{ env.IMAGE_REGISTRY }}
+          username: ${{ env.REGISTRY_USERNAME }}
+          password: ${{ env.REGISTRY_PASSWORD }}
