@@ -1,27 +1,25 @@
-FROM quay.io/fedora/fedora-minimal:39
+FROM quay.io/fedora/fedora:39
 
 # DNF setup
 RUN echo "assumeyes=True" >> /etc/dnf/dnf.conf
 
 # Locale
-RUN dnf5 install glibc-langpack-en
 ENV LANG=en_US.utf8
 
 # Vital packages
-RUN dnf5 upgrade --refresh
-RUN dnf5 install \
+RUN dnf install \
   gzip \
   sudo \
   tar \
   util-linux
 
 # Buildah and Podman
-RUN dnf5 install buildah podman
+RUN dnf install buildah podman
 
 # Docker
 COPY --chown=root:root ./repos/docker-ce.repo /etc/yum.repos.d/docker-ce.repo
 RUN chmod 0644 /etc/yum.repos.d/docker-ce.repo
-RUN dnf5 install \
+RUN dnf install \
   docker-ce \
   docker-ce-cli \
   containerd.io \
@@ -29,7 +27,7 @@ RUN dnf5 install \
   docker-compose-plugin
 
 # .NET Core dependencies
-RUN dnf5 install \
+RUN dnf install \
   krb5-libs \
   libicu \
   lttng-ust \
