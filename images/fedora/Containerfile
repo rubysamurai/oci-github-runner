@@ -21,7 +21,7 @@ RUN dnf5 install \
 RUN dnf5 install buildah podman
 
 # Docker
-COPY --chown=root:root repos/docker-ce.repo /etc/yum.repos.d/docker-ce.repo
+COPY --chown=root:root ./repos/docker-ce.repo /etc/yum.repos.d/docker-ce.repo
 RUN chmod 0644 /etc/yum.repos.d/docker-ce.repo
 RUN dnf5 install \
   docker-ce \
