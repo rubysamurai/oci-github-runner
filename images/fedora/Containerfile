@@ -2,17 +2,15 @@ FROM quay.io/fedora/fedora-minimal:39
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Locale
-RUN dnf5 -y install glibc-langpack-en
-ENV LANG=en_US.utf8
-ENV LANGUAGE=en_US.utf8
-ENV LC_ALL=en_US.utf8
-
 # DNF setup
 RUN echo "assumeyes=True" >> /etc/dnf/dnf.conf
-RUN dnf5 upgrade --refresh
+
+# Locale
+RUN dnf5 install glibc-langpack-en
+ENV LANG=en_US.utf8
 
 # Vital packages
+RUN dnf5 upgrade --refresh
 RUN dnf5 install \
   gzip \
   sudo \
