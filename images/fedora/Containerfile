@@ -16,7 +16,8 @@ RUN dnf5 install \
   util-linux
 
 # Buildah and Podman
-RUN dnf5 install buildah podman
+RUN dnf5 reinstall shadow-utils
+RUN dnf5 install buildah podman --exclude container-selinux
 
 # Docker
 COPY --chown=root:root ./repos/docker-ce.repo /etc/yum.repos.d/docker-ce.repo
