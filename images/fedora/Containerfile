@@ -1,5 +1,46 @@
 FROM quay.io/fedora/fedora-minimal:39
 
-RUN echo "assumeyes=True" >> /etc/dnf/dnf.conf
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
-RUN dnf5 upgrade
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# DNF setup
+RUN echo "assumeyes=True" >> /etc/dnf/dnf.conf
+RUN dnf5 upgrade --refresh
+
+# Vital packages
+RUN dnf5 install \
+  gzip \
+  sudo \
+  tar \
+  util-linux
+
+# Buildah and Podman
+RUN dnf5 install buildah podman
+
+# Docker
+RUN dnf5 install dnf-plugins-core
+RUN dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+RUN dnf5 install \
+  docker-ce \
+  docker-ce-cli \
+  containerd.io \
+  docker-buildx-plugin \
+  docker-compose-plugin
+
+# .NET Core dependencies
+RUN dnf5 install \
+  krb5-libs \
+  libicu \
+  lttng-ust \
+  openssl-libs \
+  zlib
+
+# Runner user
+RUN useradd -m runner && \
+  usermod -aG wheel runner && \
+  usermod -aG docker runner && \
+  echo "%wheel ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+USER runner
