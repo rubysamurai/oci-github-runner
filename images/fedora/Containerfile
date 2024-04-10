@@ -37,6 +37,9 @@ RUN dnf5 install \
   openssl-libs \
   zlib
 
+# Remove DNF cache and logs
+RUN rm -rf /var/cache /var/log/dnf* /var/log/yum.*
+
 # Runner user
 RUN useradd -m runner && \
   usermod -aG wheel runner && \
