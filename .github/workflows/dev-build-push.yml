@@ -34,6 +34,7 @@ jobs:
           image: ${{ env.IMAGE_NAME }}
           tags: dev ${{ github.sha }}
           oci: true
+          context: ./images/fedora
           containerfiles: |
             ./images/fedora/Containerfile
 
