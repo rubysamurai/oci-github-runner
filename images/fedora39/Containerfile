@@ -8,7 +8,6 @@ RUN dnf5 install glibc-langpack-en
 ENV LANG=en_US.utf8
 
 # Vital packages
-RUN dnf5 upgrade --refresh
 RUN dnf5 install \
   gzip \
   sudo \
@@ -38,7 +37,8 @@ RUN dnf5 install \
   zlib
 
 # Remove DNF cache and logs
-RUN rm -rf /var/cache /var/log/dnf* /var/log/yum.*
+RUN dnf5 clean all
+RUN rm -rf /var/log/dnf* /var/log/yum.*
 
 # Runner user
 RUN useradd -m runner && \
