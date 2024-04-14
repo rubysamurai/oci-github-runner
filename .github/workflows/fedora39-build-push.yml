@@ -1,12 +1,12 @@
-name: "DEV: build and push"
+name: "Fedora 39: build and push"
 
 on:
   push:
     branches:
       - main
     paths:
-      - images/fedora/**
-      - .github/workflows/dev-build-push.yml
+      - images/fedora39/**
+      - .github/workflows/fedora39-build-push.yml
 
 env:
   IMAGE_NAME: oci-github-runner
@@ -32,11 +32,11 @@ jobs:
         uses: redhat-actions/buildah-build@v2
         with:
           image: ${{ env.IMAGE_NAME }}
-          tags: dev ${{ github.sha }}
+          tags: fedora-39 ${{ github.sha }}
           oci: true
-          context: ./images/fedora
+          context: ./images/fedora39
           containerfiles: |
-            ./images/fedora/Containerfile
+            ./images/fedora39/Containerfile
 
       - name: Push to registry
         id: push-image
