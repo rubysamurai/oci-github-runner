@@ -29,6 +29,5 @@ RUN rm -rf /var/log/dnf* /var/log/yum.*
 # Runner user
 RUN useradd -m runner && \
   usermod -aG wheel runner && \
-  usermod -aG docker runner && \
   echo "%wheel ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER runner
