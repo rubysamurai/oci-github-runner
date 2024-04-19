@@ -14,20 +14,6 @@ RUN dnf5 install \
   tar \
   util-linux
 
-# Buildah and Podman
-RUN dnf5 reinstall shadow-utils
-RUN dnf5 install buildah podman --exclude container-selinux
-
-# Docker
-COPY --chown=root:root ./repos/docker-ce.repo /etc/yum.repos.d/docker-ce.repo
-RUN chmod 0644 /etc/yum.repos.d/docker-ce.repo
-RUN dnf5 install \
-  docker-ce \
-  docker-ce-cli \
-  containerd.io \
-  docker-buildx-plugin \
-  docker-compose-plugin
-
 # .NET Core dependencies
 RUN dnf5 install \
   krb5-libs \
