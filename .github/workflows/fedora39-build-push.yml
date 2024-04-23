@@ -11,6 +11,7 @@ on:
 env:
   IMAGE_NAME: oci-github-runner
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+  IMAGE_OS: fedora-39
   REGISTRY_USERNAME: ${{ github.actor }}
   REGISTRY_PASSWORD: ${{ github.token }}
 
@@ -32,7 +33,7 @@ jobs:
         uses: redhat-actions/buildah-build@v2
         with:
           image: ${{ env.IMAGE_NAME }}
-          tags: fedora-39 ${{ github.sha }}
+          tags: ${{ env.IMAGE_OS }} ${{ github.sha }}
           oci: true
           context: ./images/fedora39
           containerfiles: |
