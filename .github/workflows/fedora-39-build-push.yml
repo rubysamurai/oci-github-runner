@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - images/fedora39/**
-      - .github/workflows/fedora39-build-push.yml
+      - images/fedora-39/**
+      - .github/workflows/fedora-39-build-push.yml
 
 env:
   IMAGE_NAME: oci-github-runner
@@ -35,9 +35,9 @@ jobs:
           image: ${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_OS }} ${{ github.sha }}
           oci: true
-          context: ./images/fedora39
+          context: ./images/${{ env.IMAGE_OS }}
           containerfiles: |
-            ./images/fedora39/Containerfile
+            ./images/${{ env.IMAGE_OS }}/Containerfile
 
       - name: Push to registry
         id: push-image
